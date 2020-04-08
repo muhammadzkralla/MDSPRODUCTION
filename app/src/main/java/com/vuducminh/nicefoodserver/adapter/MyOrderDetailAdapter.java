@@ -45,7 +45,7 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHOlder holder, int position) {
-        Glide.with(context).load(cartItemList.get(position).getFoodImage()).into(holder.img_food_image);
+        Glide.with(context).load(cartItemList.get(position).getFoodImage()).centerCrop().into(holder.img_food_img);
         holder.txt_food_quantity.setText(new StringBuilder("Quantity: ").append(cartItemList.get(position).getFoodQuantity()));
         SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(),new TypeToken<SizeModel>(){}.getType());
         if (sizeModel != null){
@@ -85,11 +85,13 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
 
         @BindView(R.id.txt_food_quantity)
         TextView txt_food_quantity;
-        @BindView(R.id.img_food_image)
-        ImageView img_food_image;
-        private Unbinder unbinder;
 
-        public MyViewHOlder(@NonNull View itemView) {
+       @BindView(R.id.img_food_img)
+        ImageView img_food_img;
+
+       private Unbinder unbinder;
+//
+        MyViewHOlder(@NonNull View itemView) {
             super(itemView);
             unbinder = ButterKnife.bind(this,itemView);
         }
