@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.vuducminh.nicefoodserver.R;
 import com.vuducminh.nicefoodserver.model.AddonModel;
 import com.vuducminh.nicefoodserver.model.CartItem;
+import com.vuducminh.nicefoodserver.model.FoodModel;
 import com.vuducminh.nicefoodserver.model.SizeModel;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
     public void onBindViewHolder(@NonNull MyViewHOlder holder, int position) {
         Glide.with(context).load(cartItemList.get(position).getFoodImage()).centerCrop().into(holder.img_food_img);
         holder.txt_food_quantity.setText(new StringBuilder("Quantity: ").append(cartItemList.get(position).getFoodQuantity()));
+        holder.txt_food_name.setText(cartItemList.get(position).getFoodName());
         SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(),new TypeToken<SizeModel>(){}.getType());
         if (sizeModel != null){
             holder.txt_size.setText(new StringBuilder("Size: ").append(sizeModel.getName()));
