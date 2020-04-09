@@ -59,6 +59,17 @@
                 android:fontFamily="@font/brandon_medium"
                 android:textStyle="italic"
                 android:textSize="16sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_phone"
+                android:text="AddOn : default"
+                android:fontFamily="@font/brandon_medium"
+                android:textStyle="italic"
+                android:textSize="16sp"/>
+
+
+
 
 
 

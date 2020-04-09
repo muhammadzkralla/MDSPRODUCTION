@@ -1,6 +1,7 @@
 package com.vuducminh.nicefoodserver.ui.order;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -98,6 +99,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
 
     private IShipperLoadcallbackListener shipperLoadcallbackListener;
 
+    @SuppressLint("FragmentLiveDataObserve")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         orderViewModel =
@@ -135,11 +137,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_order, width / 6) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Directions", 30, 0, Color.parseColor("#9B0000"),
-                        position -> {
 
-                        })
-                );
 
                 buf.add(new MyButton(getContext(), "Call", 30, 0, Color.parseColor("#560027"),
                         position -> {
@@ -170,40 +168,6 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                                     }).check();
                         })
                 );
-                buf.add(new MyButton(getContext(), "Remove", 30, 0, Color.parseColor("#12005E"),
-                        position -> {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
-                                    .setTitle("Delete")
-                                    .setMessage("Do you really want to delete this order?")
-                                    .setNegativeButton("CANCLE", (dialogInterface, which) -> {
-                                        dialogInterface.dismiss();
-                                    })
-                                    .setPositiveButton("DELETE", (dialogInterface, which) -> {
-                                        OrderModel orderModel = adapter.getItemAtPosition(position);
-                                        FirebaseDatabase.getInstance()
-                                                .getReference(CommonAgr.ORDER_REF)
-                                                .child(orderModel.getKey())
-                                                .removeValue()
-                                                .addOnFailureListener(e -> {
-                                                    Toast.makeText(getContext(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                })
-                                                .addOnSuccessListener(task -> {
-                                                    adapter.removeItem(position);
-                                                    adapter.notifyItemRemoved(position);
-                                                    updateTextCounter();
-                                                    dialogInterface.dismiss();
-                                                    Toast.makeText(getContext(), "Order has been delete!", Toast.LENGTH_SHORT).show();
-                                                });
-                                    });
-
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                            Button negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-                            negativeButton.setTextColor(Color.GRAY);
-                            Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
-                            positiveButton.setTextColor(Color.RED);
-                        }
-                ));
                 buf.add(new MyButton(getContext(), "Edit", 30, 0, Color.parseColor("#336699"),
                         position -> {
                             showEditDialog(adapter.getItemAtPosition(position), position);

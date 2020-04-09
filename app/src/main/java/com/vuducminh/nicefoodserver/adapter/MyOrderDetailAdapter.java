@@ -19,6 +19,7 @@ import com.vuducminh.nicefoodserver.R;
 import com.vuducminh.nicefoodserver.model.AddonModel;
 import com.vuducminh.nicefoodserver.model.CartItem;
 import com.vuducminh.nicefoodserver.model.FoodModel;
+import com.vuducminh.nicefoodserver.model.OrderModel;
 import com.vuducminh.nicefoodserver.model.SizeModel;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
     Context context;
     List<CartItem> cartItemList;
     Gson gson;
+    private OrderModel orderModel;
 
     public MyOrderDetailAdapter(Context context, List<CartItem> cartItemList) {
         this.context = context;
@@ -49,6 +51,7 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
         Glide.with(context).load(cartItemList.get(position).getFoodImage()).centerCrop().into(holder.img_food_img);
         holder.txt_food_quantity.setText(new StringBuilder("Quantity: ").append(cartItemList.get(position).getFoodQuantity()));
         holder.txt_food_name.setText(cartItemList.get(position).getFoodName());
+        holder.txt_phone.setText(cartItemList.get(position).getUserPhone());
         SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(),new TypeToken<SizeModel>(){}.getType());
         if (sizeModel != null){
             holder.txt_size.setText(new StringBuilder("Size: ").append(sizeModel.getName()));
@@ -91,7 +94,13 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
        @BindView(R.id.img_food_img)
         ImageView img_food_img;
 
-       private Unbinder unbinder;
+       @BindView(R.id.txt_phone)
+       TextView txt_phone;
+
+
+
+
+        private Unbinder unbinder;
 //
         MyViewHOlder(@NonNull View itemView) {
             super(itemView);

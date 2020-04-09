@@ -68,6 +68,15 @@ public class MyOrderAdapter  extends RecyclerView.Adapter<MyOrderAdapter.MyViewH
         Common.setSpanStringColor("Num of items: ",orderModel.getCartItemList() == null ? "0" :
                 String.valueOf(orderModel.getCartItemList().size()),
                 holder.tv_num_item, Color.parseColor("#4B647D"));
+        Common.setSpanStringColor("Phone : ",orderModel.getUserPhone(),
+                holder.phone, Color.parseColor("#00574B"));
+        Common.setSpanStringColor("Comment : ",orderModel.getCommet(),
+                holder.comment, Color.parseColor("#00574B"));
+        Common.setSpanStringColor("address : ",orderModel.getShippingAddress(),
+                holder.address, Color.parseColor("#00574B"));
+
+
+
 
         holder.setRecyclerClickListener((view, pos) ->
 
@@ -137,6 +146,13 @@ public class MyOrderAdapter  extends RecyclerView.Adapter<MyOrderAdapter.MyViewH
         TextView tv_order_status;
         @BindView(R.id.tv_num_item)
         TextView tv_num_item;
+        @BindView(R.id.phone)
+        TextView phone;
+        @BindView(R.id.comment)
+        TextView comment;
+        @BindView(R.id.address)
+        TextView address;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
