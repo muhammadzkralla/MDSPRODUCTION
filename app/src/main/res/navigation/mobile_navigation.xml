@@ -47,6 +47,18 @@
             app:popUpTo="@id/nav_category"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_best_deals"
+        android:name="com.vuducminh.nicefoodserver.ui.best_deals.BestDealsFragment"
+        android:label="@string/menu_best_deal"
+        tools:layout="@layout/best_deals_fragment">
+        <action
+            android:id="@+id/clearBackstack"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_category"
+            app:popUpToInclusive="true" />
+    </fragment>
+
 
 
 </navigation>

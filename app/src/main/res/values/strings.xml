@@ -18,4 +18,6 @@
     <string name="menu_order">Orders</string>
     <string name="menu_shipper">Shippers</string>
     <string name="sign_out">Sign Out</string>
+    <string name="menu_best_deal">Best Deal</string>
+    <string name="menu_most_popular">Most Popoular</string>
 </resources>

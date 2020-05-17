@@ -40,6 +40,7 @@ public class Common {
     public static final String SHIPPER = "Shippers";
     public static final String SHIPPER_ORDER_REF = "ShippingOrderModel";
     public static final String RESTAURANT_REF = "Restaurant";
+    public static final String BEST_DEALS = "BestDeals";
     public static ServerUserModel currentServerUser;
     public static CategoryModel categorySelected;
     public static FoodModel selectedFood;

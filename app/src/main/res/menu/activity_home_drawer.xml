@@ -9,6 +9,21 @@
             android:icon="@drawable/ic_restaurant_menu_black_24dp"
             android:title="@string/menu_category" />
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_best_deals"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="@string/menu_best_deal" />
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_most_popular"
+            android:icon="@drawable/ic_whatshot_black_24dp"
+            android:title="@string/menu_most_popular" />
+    </group>
+
+
+
 
     <group android:checkableBehavior="single">
         <item

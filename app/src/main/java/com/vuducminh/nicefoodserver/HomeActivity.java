@@ -173,12 +173,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             }
+
             case R.id.nav_order: {
-                if (menuItem.getItemId() != menuClick) {
+                if (menuItem.getItemId() != menuClick)
+                {
                     navController.popBackStack();
                     navController.navigate(R.id.nav_order);
                 }
                 break;
+
             }
             case R.id.nav_shipper: {
                 if (menuItem.getItemId() != menuClick) {
@@ -186,7 +189,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     navController.navigate(R.id.nav_shipper);
                 }
                 break;
+
+            } case R.id.nav_best_deals: {
+                if (menuItem.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_best_deals);
+                }
+                break;
+
             }
+            case R.id.nav_most_popular: {
+                if (menuItem.getItemId() != menuClick) {
+                    navController.popBackStack();
+                    navController.navigate(R.id.nav_most_popular);
+                }
+                break;
+
+            }
+
             case R.id.nav_sign_out: {
                 signOut();
                 break;
