@@ -4,14 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.vuducminh.nicefoodserver.callback.ICategoryCallbackListener;
+import com.vuducminh.nicefoodserver.common.Common;
 import com.vuducminh.nicefoodserver.common.CommonAgr;
 import com.vuducminh.nicefoodserver.model.CategoryModel;
+import com.vuducminh.nicefoodserver.model.ServerUserModel;
+import com.vuducminh.nicefoodserver.model.TokenModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +24,13 @@ import java.util.List;
 public class CategoryViewModel extends ViewModel implements ICategoryCallbackListener {
 
     private MutableLiveData<List<CategoryModel>> categoryList;
+    private DatabaseReference categoryRef;
     private MutableLiveData<String> messageError = new MutableLiveData<>();
     private ICategoryCallbackListener categoryCallbackListener;
+
+
+
+
 
     public CategoryViewModel() {
         categoryCallbackListener = this;
@@ -37,17 +47,26 @@ public class CategoryViewModel extends ViewModel implements ICategoryCallbackLis
     }
 
     public void loadCategories() {
+        
         List<CategoryModel> tempList = new ArrayList<>();
-        DatabaseReference categoryRef = FirebaseDatabase.getInstance().getReference(CommonAgr.CATEGORY_REF);
+         categoryRef = FirebaseDatabase.getInstance().getReference(CommonAgr.RESTAURANT_REF)
+                 .child(Common.currentServerUser.getRestaurant())
+                 .child(Common.CATEGORY_REF);
         categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot itemSnaShot:dataSnapshot.getChildren()) {
-                    CategoryModel categoryModel = itemSnaShot.getValue(CategoryModel.class);
-                    categoryModel.setMenu_id(itemSnaShot.getKey());
-                    tempList.add(categoryModel);
-                }
-                categoryCallbackListener.onCategoryLoadSuccess(tempList);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot itemSnaShot : dataSnapshot.getChildren()) {
+                        CategoryModel categoryModel = itemSnaShot.getValue(CategoryModel.class);
+                        categoryModel.setMenu_id(itemSnaShot.getKey());
+                        tempList.add(categoryModel);
+                    }
+                    if (tempList.size() > 0)
+                        categoryCallbackListener.onCategoryLoadSuccess(tempList);
+                    else
+                        categoryCallbackListener.onCategoryLoadFailed("Category empty!");
+                }else
+                    categoryCallbackListener.onCategoryLoadFailed("Category not exist!");
             }
 
             @Override

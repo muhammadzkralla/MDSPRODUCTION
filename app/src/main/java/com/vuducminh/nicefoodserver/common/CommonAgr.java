@@ -12,4 +12,6 @@ public class CommonAgr {
     public static final String URL_FCM = "https://fom.googleapis.com/";
     public static final String SHIPPER = "Shippers";
     public static final String SHIPPER_ORDER_REF = "ShippingOrderModel";
+    public static final String RESTAURANT_REF = "Restaurant";
+
 }

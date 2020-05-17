@@ -188,7 +188,9 @@ public class CategoryFragment extends Fragment {
 
     private void updatecategory(Map<String, Object> updateDate) {
         FirebaseDatabase.getInstance()
-                .getReference(CommonAgr.CATEGORY_REF)
+                .getReference(CommonAgr.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.CATEGORY_REF)
                 .child(Common.categorySelected.getMenu_id())
                 .updateChildren(updateDate)
                 .addOnFailureListener(e -> {
