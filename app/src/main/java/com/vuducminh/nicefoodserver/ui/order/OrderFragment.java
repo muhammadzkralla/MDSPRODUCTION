@@ -275,18 +275,9 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                 dialog.dismiss();
                 updateOrder(position, orderModel, -1);
             }
-            else if (rdi_shipping != null && rdi_shipping.isChecked()) {
-
-
-                ShipperModel shipperModel = null;
-                if (myShipperSelectionAdapter != null) {
-                    shipperModel = myShipperSelectionAdapter.getSelectedShipper();
-                    if (shipperModel != null) {
-                        createShippingOrder(shipperModel, orderModel, dialog,position);
-                    } else {
-                        Toast.makeText(getContext(), "Please select Shipper", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            else if ( rdi_shipping != null&&rdi_shipping.isChecked()) {
+                dialog.dismiss();
+                updateOrder(position, orderModel, 1);
 //                updateOrder(position, orderModel, 1);
             }
             else if (rdi_shipped != null && rdi_shipped.isChecked()) {

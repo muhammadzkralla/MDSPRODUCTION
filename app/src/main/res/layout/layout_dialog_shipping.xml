@@ -50,7 +50,7 @@
             android:id="@+id/rdi_shipping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shipping"
+            android:text="On My Way"
             android:fontFamily="@font/brandon_medium"
             android:checked="true"
             android:textSize="22sp"/>

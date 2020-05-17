@@ -59,7 +59,7 @@ public class Common {
                 return "Placed";
             }
             case 1: {
-                return "Shipping";
+                return "On My Way";
             }
             case 2: {
                 return "Shipped";
