@@ -40,9 +40,8 @@ public class MyBestDealsAdapter extends RecyclerView.Adapter<MyBestDealsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Glide.with(context).load(bestDealsModelList.get(position).getImage())
-                .into(holder.img_category);
-        holder.tv_category.setText(new StringBuilder(bestDealsModelList.get(position).getName()));
+        Glide.with(context).load(bestDealsModelList.get(position).getImage()).into(holder.img_category);
+        holder.tv_category.setText(new StringBuffer(bestDealsModelList.get(position).getName()));
 
         //Event
         holder.setListener((View, pos) ->{
@@ -68,6 +67,8 @@ public class MyBestDealsAdapter extends RecyclerView.Adapter<MyBestDealsAdapter.
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            unbinder = ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
 
@@ -81,5 +82,6 @@ public class MyBestDealsAdapter extends RecyclerView.Adapter<MyBestDealsAdapter.
         public void onClick(View v) {
             listener.onItemClickListener(v, getAdapterPosition());
         }
+
     }
 }

@@ -125,12 +125,12 @@ public class BestDealsFragment extends Fragment {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
 
-                buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#333639"),
-                                position -> {
-                                    Common.bestDealsSelected = bestDealsModels.get(position);
+                /*buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#333639"),
+                        position -> {
+                            Common.bestDealsSelected = bestDealsModels.get(position);
 
-                                    showDeleteDialog();
-                                }));
+                            showDeleteDialog();
+                        })); */
 
                 buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
                         position -> {
@@ -144,7 +144,7 @@ public class BestDealsFragment extends Fragment {
 
     }
 
-    private void showDeleteDialog() {
+   /* private void showDeleteDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
         builder.setTitle("Delete");
         builder.setMessage("Do you really want to delete this item?");
@@ -178,6 +178,8 @@ public class BestDealsFragment extends Fragment {
                     EventBus.getDefault().postSticky(new ToastEvent(false,true));
                 });
     }
+    */
+
 
     private void showUpdateDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
@@ -246,7 +248,9 @@ public class BestDealsFragment extends Fragment {
     }
     private void updateBestDeals(Map<String, Object> updateDate) {
         FirebaseDatabase.getInstance()
-                .getReference(Common.BEST_DEALS)
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.BEST_DEALS)
                 .child(Common.bestDealsSelected.getKey())
                 .updateChildren(updateDate)
                 .addOnFailureListener(e -> {

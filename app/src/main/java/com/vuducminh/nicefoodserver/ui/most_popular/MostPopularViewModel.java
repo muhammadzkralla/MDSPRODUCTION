@@ -35,11 +35,13 @@ public class MostPopularViewModel extends ViewModel implements IMostPopularCallB
         return mostPopularListMutable;
     }
 
-    private void loadMostPopular() {
+    public void loadMostPopular() {
 
         List<MostPopularModel> temp = new ArrayList<>();
         DatabaseReference mostPopularRef = FirebaseDatabase.getInstance()
-                .getReference(Common.MOST_POPULAR);
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.MOST_POPULAR);
         mostPopularRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

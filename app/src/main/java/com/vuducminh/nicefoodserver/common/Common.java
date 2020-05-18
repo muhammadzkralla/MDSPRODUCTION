@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.vuducminh.nicefoodserver.model.BestDealsModel;
 import com.vuducminh.nicefoodserver.model.CategoryModel;
 import com.vuducminh.nicefoodserver.model.FoodModel;
+import com.vuducminh.nicefoodserver.model.MostPopularModel;
 import com.vuducminh.nicefoodserver.model.ServerUserModel;
 import com.vuducminh.nicefoodserver.model.TokenModel;
 import com.vuducminh.nicefoodserver.R;
@@ -47,6 +48,7 @@ public class Common {
     public static CategoryModel categorySelected;
     public static FoodModel selectedFood;
     public static BestDealsModel bestDealsSelected;
+    public static MostPopularModel mostPopularSelected;
 
     public static void setSpanString(String welcome, String name, TextView tv_user) {
         SpannableStringBuilder builder = new SpannableStringBuilder();

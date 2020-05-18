@@ -18,6 +18,7 @@ import com.vuducminh.nicefoodserver.model.MostPopularModel;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class MyMostPopularAdapter extends RecyclerView.Adapter<MyMostPopularAdapter.MyViewHolder> {
@@ -67,6 +68,8 @@ public class MyMostPopularAdapter extends RecyclerView.Adapter<MyMostPopularAdap
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
+            unbinder = ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
 
