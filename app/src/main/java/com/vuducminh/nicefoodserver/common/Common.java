@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.database.FirebaseDatabase;
+import com.vuducminh.nicefoodserver.model.BestDealsModel;
 import com.vuducminh.nicefoodserver.model.CategoryModel;
 import com.vuducminh.nicefoodserver.model.FoodModel;
 import com.vuducminh.nicefoodserver.model.ServerUserModel;
@@ -44,6 +45,7 @@ public class Common {
     public static ServerUserModel currentServerUser;
     public static CategoryModel categorySelected;
     public static FoodModel selectedFood;
+    public static BestDealsModel bestDealsSelected;
 
     public static void setSpanString(String welcome, String name, TextView tv_user) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
