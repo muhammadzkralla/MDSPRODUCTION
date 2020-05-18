@@ -373,7 +373,9 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
             updateDate.put("orderStatus", status);
 
             FirebaseDatabase.getInstance()
-                    .getReference(CommonAgr.ORDER_REF)
+                    .getReference(CommonAgr.RESTAURANT_REF)
+                    .child(Common.currentServerUser.getRestaurant())
+                    .child(Common.ORDER_REF)
                     .child(orderModel.getKey())
                     .updateChildren(updateDate)
                     .addOnFailureListener(e -> {
@@ -453,7 +455,9 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
 
 
             FirebaseDatabase.getInstance()
-                    .getReference(CommonAgr.ORDER_REF)
+                    .getReference(CommonAgr.RESTAURANT_REF)
+                    .child(Common.currentServerUser.getRestaurant())
+                    .child(Common.ORDER_REF)
                     .child(orderModel.getKey())
                     .removeValue()
                     .addOnFailureListener(e -> {

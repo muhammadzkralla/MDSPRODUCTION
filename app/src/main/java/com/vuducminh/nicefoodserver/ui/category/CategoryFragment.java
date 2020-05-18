@@ -109,6 +109,14 @@ public class CategoryFragment extends Fragment {
         MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(),recycler_menu,200) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
+                buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#333639"),
+                        position -> {
+                            Common.categorySelected = categoryModels.get(position);
+
+                            showDeleteDialog();
+                        })
+                );
+
                 buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
                         position -> {
                             Common.categorySelected = categoryModels.get(position);
@@ -118,6 +126,33 @@ public class CategoryFragment extends Fragment {
                 );
             }
         };
+    }
+
+    private void showDeleteDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+        builder.setTitle("Delete");
+        builder.setMessage("Are you sure you want this?");
+        builder.setNegativeButton("Cancel",(dialog1, which) ->
+                dialog1.dismiss());
+        builder.setPositiveButton("Delete",((dialog1, which) -> deleteCategory()));
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deleteCategory() {
+        FirebaseDatabase.getInstance()
+                .getReference(CommonAgr.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.CATEGORY_REF)
+                .child(Common.categorySelected.getMenu_id())
+                .removeValue()
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                })
+                .addOnCompleteListener(task -> {
+                    categoryViewModel.loadCategories();
+                    EventBus.getDefault().postSticky(new ToastEvent(false,false));
+                });
     }
 
     private void showUpdateDialog() {
