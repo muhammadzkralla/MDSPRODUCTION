@@ -191,7 +191,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
             layout_dialog = LayoutInflater.from(getContext())
                     .inflate(R.layout.layout_dialog_shipping, null);
 
-            recycler_shipper = layout_dialog.findViewById(R.id.recycler_shippers);
+            //recycler_shipper = layout_dialog.findViewById(R.id.recycler_shippers);
             builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
                     .setView(layout_dialog);
         } else if (orderModel.getOrderStatus() == -1) {
