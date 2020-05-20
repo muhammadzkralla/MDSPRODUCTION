@@ -44,6 +44,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.vuducminh.nicefoodserver.HomeActivity;
 import com.vuducminh.nicefoodserver.adapter.MyOrderAdapter;
 import com.vuducminh.nicefoodserver.adapter.MyShipperSelectionAdapter;
 import com.vuducminh.nicefoodserver.callback.IShipperLoadcallbackListener;
@@ -104,6 +105,26 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
     @SuppressLint("FragmentLiveDataObserve")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
+        reference.child(Common.currentServerUser.getRestaurant())
+                .child(Common.ORDER_REF)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        LoadOrderEvent loadOrderEvent = new LoadOrderEvent();
+                        orderViewModel.loadOrderByStatus(loadOrderEvent.getStatus());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
         orderViewModel =
                 ViewModelProviders.of(this).get(OrderViewModel.class);
         View root = inflater.inflate(R.layout.fragment_order, container, false);

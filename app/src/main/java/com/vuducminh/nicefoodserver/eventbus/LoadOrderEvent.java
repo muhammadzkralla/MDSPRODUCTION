@@ -3,6 +3,9 @@ package com.vuducminh.nicefoodserver.eventbus;
 public class LoadOrderEvent {
     private int status;
 
+    public LoadOrderEvent() {
+    }
+
     public LoadOrderEvent(int status) {
         this.status = status;
     }
