@@ -99,6 +99,8 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
 
     private IShipperLoadcallbackListener shipperLoadcallbackListener;
 
+
+
     @SuppressLint("FragmentLiveDataObserve")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -107,6 +109,8 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         View root = inflater.inflate(R.layout.fragment_order, container, false);
         unbinder = ButterKnife.bind(this, root);
         initViews();
+
+
         orderViewModel.getMessageError().observe(this, s -> {
             Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
         });

@@ -1,5 +1,7 @@
 package com.vuducminh.nicefoodserver.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class OrderModel {
@@ -167,5 +169,11 @@ public class OrderModel {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return userPhone;
     }
 }

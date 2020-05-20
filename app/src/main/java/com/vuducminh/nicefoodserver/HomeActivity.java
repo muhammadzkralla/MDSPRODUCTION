@@ -18,13 +18,20 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.vuducminh.nicefoodserver.common.Common;
+import com.vuducminh.nicefoodserver.common.CommonAgr;
 import com.vuducminh.nicefoodserver.eventbus.CategoryClick;
 import com.vuducminh.nicefoodserver.eventbus.ChangeMenuClick;
 import com.vuducminh.nicefoodserver.eventbus.ToastEvent;
+import com.vuducminh.nicefoodserver.model.OrderModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -56,6 +63,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         subscribeToTopic(Common.createTopicOrder());
         updatToken();
+
+
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
+        reference.child(Common.currentServerUser.getRestaurant())
+                .child(Common.ORDER_REF)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                            Toast.makeText(HomeActivity.this, " you have a new order ", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
