@@ -74,9 +74,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
                             Toast.makeText(HomeActivity.this, " you have a new order ", Toast.LENGTH_SHORT).show();
-
                     }
 
                     @Override
@@ -106,6 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         menuClick = R.id.nav_category; // Default
     }
+
 
     private void updatToken() {
         FirebaseInstanceId.getInstance()
