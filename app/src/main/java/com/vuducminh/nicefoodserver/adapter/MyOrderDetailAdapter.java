@@ -53,17 +53,21 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
         holder.txt_food_name.setText(cartItemList.get(position).getFoodName());
         holder.txt_phone.setText(cartItemList.get(position).getUserPhone());
         holder.txt_price.setText(new StringBuilder("Price : ").append(cartItemList.get(position).getFoodPrice().toString()));
-
-        SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(),new TypeToken<SizeModel>(){}.getType());
-        if (sizeModel != null){
-            holder.txt_size.setText(new StringBuilder("Size: ").append(sizeModel.getName()));
+        if (!cartItemList.get(position).getFoodSize().equals("Default")) {
+            SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(), new TypeToken<SizeModel>() {}.getType());
+            if (sizeModel != null) {
+                holder.txt_size.setText(new StringBuilder("Size: ").append(sizeModel.getName()));
+            }
+        }
+        else{
+            holder.txt_size.setText(new StringBuilder("Size: Default"));
         }
         if (!cartItemList.get(position).getFoodAddon().equals("Default")){
             List<AddonModel> addonModels = gson.fromJson(cartItemList.get(position).getFoodAddon(),new TypeToken<List<AddonModel>>(){}.getType());
             StringBuilder addonString = new StringBuilder();
             if (addonModels != null){
                 for (AddonModel addonModel : addonModels){
-                    addonString.append(addonModel.getName()).append(",");
+                    addonString.append(addonModel.getName()).append(",  ");
                     addonString.delete(addonString.length()-1,addonString.length()); // Remove Last Character
                     holder.txt_food_add_on.setText(new StringBuilder("Addon: ").append(addonString));
 
