@@ -52,7 +52,7 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
         holder.txt_food_quantity.setText(new StringBuilder("Quantity: ").append(cartItemList.get(position).getFoodQuantity()));
         holder.txt_food_name.setText(cartItemList.get(position).getFoodName());
         holder.txt_phone.setText(cartItemList.get(position).getUserPhone());
-        holder.txt_price.setText(new StringBuilder("Price : ").append(cartItemList.get(position).getFoodPrice().toString()));
+        holder.txt_price.setText(new StringBuilder("Price : ").append(cartItemList.get(position).getFoodPrice() + cartItemList.get(position).getFoodExtraPrice()).toString());
         if (!cartItemList.get(position).getFoodSize().equals("Default")) {
             SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(), new TypeToken<SizeModel>() {}.getType());
             if (sizeModel != null) {
