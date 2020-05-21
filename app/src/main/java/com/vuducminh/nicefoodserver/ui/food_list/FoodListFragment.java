@@ -137,7 +137,7 @@ public class FoodListFragment extends Fragment {
                                        })
                                        .setPositiveButton("DELETE", (dialog, which) -> {
                                            FoodModel foodModel = adapter.getItemAtPosition(position);   //Get item in adapter
-                                           if(foodModel.getPositionInList() == -1) {
+                                           if(foodModel.getPositionInList() == 0) {
                                                Common.categorySelected.getFoods().remove(position);   // if == -1, do nothing
 
                                            }
@@ -156,7 +156,7 @@ public class FoodListFragment extends Fragment {
                 buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
-                            if(foodModel.getPositionInList() == -1) {
+                            if(foodModel.getPositionInList() == 0) {
                                 showUpdateDialog(position,foodModel);
                             }
                             else {
@@ -167,7 +167,7 @@ public class FoodListFragment extends Fragment {
                 buf.add(new MyButton(getContext(), "Size", 30, 0, Color.parseColor("#12005E"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
-                            if(foodModel.getPositionInList() == -1) {
+                            if(foodModel.getPositionInList() == 0) {
                                 Common.selectedFood = foodModelList.get(position);
                             }
                             else {
@@ -176,7 +176,7 @@ public class FoodListFragment extends Fragment {
 
                             startActivity(new Intent(getContext(), SizeAddonEditActivity.class));
 
-                            if(foodModel.getPositionInList() == -1) {
+                            if(foodModel.getPositionInList() == 0) {
                                 EventBus.getDefault().postSticky(new AddonSizeEditEvent(false,position));
                             }
                             else {
@@ -187,14 +187,14 @@ public class FoodListFragment extends Fragment {
                 buf.add(new MyButton(getContext(), "Addon", 30, 0, Color.parseColor("#336699"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
-                            if(foodModel.getPositionInList() == -1) {
+                            if(foodModel.getPositionInList() == 0) {
                                 Common.selectedFood = foodModelList.get(position);
                             }
                             else {
                                 Common.selectedFood = foodModel;
                             }
                             startActivity(new Intent(getContext(), SizeAddonEditActivity.class));
-                            if(foodModel.getPositionInList() == -1) {
+                            if(foodModel.getPositionInList() == 0) {
                                 EventBus.getDefault().postSticky(new AddonSizeEditEvent(true,position));
                             }
                             else {

@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             Toast.makeText(HomeActivity.this, " you have a new order ", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
