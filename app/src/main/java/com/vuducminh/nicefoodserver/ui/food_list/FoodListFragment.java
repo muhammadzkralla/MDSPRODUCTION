@@ -43,8 +43,10 @@ import com.vuducminh.nicefoodserver.common.MySwiperHelper;
 import com.vuducminh.nicefoodserver.eventbus.AddonSizeEditEvent;
 import com.vuducminh.nicefoodserver.eventbus.ChangeMenuClick;
 import com.vuducminh.nicefoodserver.eventbus.ToastEvent;
+import com.vuducminh.nicefoodserver.model.BestDealsModel;
 import com.vuducminh.nicefoodserver.model.FoodModel;
 import com.vuducminh.nicefoodserver.R;
+import com.vuducminh.nicefoodserver.model.MostPopularModel;
 import com.vuducminh.nicefoodserver.ui.SizeAddonEditActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -122,7 +124,7 @@ public class FoodListFragment extends Fragment {
         int width = displayMetrics.widthPixels;
 
 
-        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(),recycler_food_list,width/6) {
+        MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(),recycler_food_list,width/7) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
                 buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#9B0000"),
@@ -184,6 +186,7 @@ public class FoodListFragment extends Fragment {
                             }
                         })
                 );
+
                 buf.add(new MyButton(getContext(), "Addon", 30, 0, Color.parseColor("#336699"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
@@ -203,9 +206,79 @@ public class FoodListFragment extends Fragment {
                             }
                         })
                 );
+                buf.add(new MyButton(getContext(), "add to\nbest deal", 25, 0, Color.parseColor("#9B0000"),
+                        position -> {
+                            if(foodModelList != null) {
+                                Common.selectedFood = foodModelList.get(position);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Add")
+                                        .setMessage("Do you want to add this food to best deal?")
+                                        .setNegativeButton("CANCLE", (dialogInterface, which) -> {
+                                            dialogInterface.dismiss();
+                                        })
+                                        .setPositiveButton("ADD", (dialog, which) -> {
+                                            BestDealsModel bestDealsModel = new BestDealsModel();
+                                            bestDealsModel.setFood_id(Common.selectedFood.getId());
+                                            bestDealsModel.setMenu_id(Common.categorySelected.getMenu_id());
+                                            bestDealsModel.setImage(Common.selectedFood.getImage());
+                                            bestDealsModel.setName(Common.selectedFood.getName());
+
+                                            addtoFirebase(bestDealsModel);
+                                        });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        })
+                );
+                buf.add(new MyButton(getContext(), "add to\nmost popular", 25, 0, Color.parseColor("#7B0000"),
+                        position -> {
+                            if(foodModelList != null) {
+                                Common.selectedFood = foodModelList.get(position);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                builder.setTitle("Add")
+                                        .setMessage("Do you want to add this food to most popular ?")
+                                        .setNegativeButton("CANCLE", (dialogInterface, which) -> {
+                                            dialogInterface.dismiss();
+                                        })
+                                        .setPositiveButton("ADD", (dialog, which) -> {
+                                            MostPopularModel mostPopularModel = new MostPopularModel();
+
+                                            mostPopularModel.setFood_id(Common.selectedFood.getId());
+                                            mostPopularModel.setMenu_id(Common.categorySelected.getMenu_id());
+                                            mostPopularModel.setImage(Common.selectedFood.getImage());
+                                            mostPopularModel.setName(Common.selectedFood.getName());
+
+                                            addtoFirebaseMostPopular(mostPopularModel);
+                                        });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                            }
+                        })
+                );
+
             }
         };
 
+    }
+
+    private void addtoFirebaseMostPopular(MostPopularModel mostPopularModel) {
+        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
+        FirebaseDatabase.getInstance()
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.MOST_POPULAR)
+                .push().setValue(mostPopularModel);
+    }
+
+    private void addtoFirebase(BestDealsModel bestDealsModel) {
+        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
+        FirebaseDatabase.getInstance()
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.BEST_DEALS)
+                .push().setValue(bestDealsModel);
     }
 
     private void showUpdateDialog(int position,FoodModel foodModel) {

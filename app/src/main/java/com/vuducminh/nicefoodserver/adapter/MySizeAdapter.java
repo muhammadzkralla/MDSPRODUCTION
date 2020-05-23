@@ -10,7 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.vuducminh.nicefoodserver.callback.IRecyclerClickListener;
+import com.vuducminh.nicefoodserver.common.Common;
+import com.vuducminh.nicefoodserver.common.CommonAgr;
 import com.vuducminh.nicefoodserver.eventbus.SelectSizeModel;
 import com.vuducminh.nicefoodserver.model.SizeModel;
 import com.vuducminh.nicefoodserver.eventbus.UpdateSizeModel;
@@ -30,6 +33,13 @@ public class MySizeAdapter extends RecyclerView.Adapter<MySizeAdapter.MyViewHold
     private List<SizeModel> sizeModelList;
     private UpdateSizeModel updateSizeModel;
     int editPos;
+
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+    @BindView(R.id.tv_price)
+    TextView tv_price;
+    @BindView(R.id.img_delete)
+    ImageView img_delete;
 
     public MySizeAdapter(Context context, List<SizeModel> sizeModelList) {
         this.context = context;
@@ -74,15 +84,18 @@ public class MySizeAdapter extends RecyclerView.Adapter<MySizeAdapter.MyViewHold
 
     public void addNewSize(SizeModel sizeModel) {
 
+
         sizeModelList.add(sizeModel);
         notifyItemChanged(sizeModelList.size()-1);
         updateSizeModel.setSizeModelList(sizeModelList);
         EventBus.getDefault().postSticky(updateSizeModel);
     }
 
+
+
     public void editSize(SizeModel sizeModel) {
         if(editPos != -1) {
-            sizeModelList.set(editPos,sizeModel);
+            sizeModelList.set(editPos, sizeModel);
             notifyItemChanged(editPos);
             editPos = -1;
             updateSizeModel.setSizeModelList(sizeModelList);

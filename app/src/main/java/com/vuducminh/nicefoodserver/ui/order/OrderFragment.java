@@ -2,11 +2,13 @@ package com.vuducminh.nicefoodserver.ui.order;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -106,7 +109,6 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
         reference.child(Common.currentServerUser.getRestaurant())
@@ -116,6 +118,8 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         LoadOrderEvent loadOrderEvent = new LoadOrderEvent();
                         orderViewModel.loadOrderByStatus(loadOrderEvent.getStatus());
+
+
                     }
 
                     @Override
@@ -125,8 +129,10 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                 });
 
 
-        orderViewModel =
-                ViewModelProviders.of(this).get(OrderViewModel.class);
+
+
+        orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
+        //orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
         View root = inflater.inflate(R.layout.fragment_order, container, false);
         unbinder = ButterKnife.bind(this, root);
         initViews();
@@ -206,7 +212,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         recycler_order.setHasFixedSize(true);
         recycler_order.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        layoutAnimationControllerl = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_item_from_left);
+        //layoutAnimationControllerl = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_item_from_left);
     }
 
     private void showEditDialog(OrderModel orderModel, int position) {
@@ -321,7 +327,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         });
     }
 
-    private void createShippingOrder(ShipperModel shipperModel, OrderModel orderModel, AlertDialog dialog,int position) {
+   /** private void createShippingOrder(ShipperModel shipperModel, OrderModel orderModel, AlertDialog dialog,int position) {
         ShippingOrderModel shippingOrder = new ShippingOrderModel();
         shippingOrder.setShipperPhone(shipperModel.getPhone());
         shippingOrder.setShipperName(shipperModel.getName());
@@ -390,7 +396,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                     }
                 });
 
-    }
+    }**/
 
     private void updateOrder(int position, OrderModel orderModel, int status) {
         if (!TextUtils.isEmpty(orderModel.getKey())) {
