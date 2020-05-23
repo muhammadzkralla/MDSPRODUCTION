@@ -109,7 +109,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+       /** FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
         reference.child(Common.currentServerUser.getRestaurant())
                 .child(Common.ORDER_REF)
@@ -126,7 +126,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
+                });**/
 
 
 
@@ -170,7 +170,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
 
 
-                buf.add(new MyButton(getContext(), "Call", 30, 0, Color.parseColor("#560027"),
+               /** buf.add(new MyButton(getContext(), "Call", 30, 0, Color.parseColor("#560027"),
                         position -> {
                             Dexter.withActivity(getActivity())
                                     .withPermission(Manifest.permission.CALL_PHONE)
@@ -198,7 +198,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                                         }
                                     }).check();
                         })
-                );
+                );**/
                 buf.add(new MyButton(getContext(), "Edit", 30, 0, Color.parseColor("#336699"),
                         position -> {
                             showEditDialog(adapter.getItemAtPosition(position), position);
