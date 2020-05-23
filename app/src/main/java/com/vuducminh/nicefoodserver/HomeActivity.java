@@ -1,23 +1,14 @@
 package com.vuducminh.nicefoodserver;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,7 +18,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,11 +30,8 @@ import com.vuducminh.nicefoodserver.common.Common;
 import com.vuducminh.nicefoodserver.common.CommonAgr;
 import com.vuducminh.nicefoodserver.eventbus.CategoryClick;
 import com.vuducminh.nicefoodserver.eventbus.ChangeMenuClick;
-import com.vuducminh.nicefoodserver.eventbus.LoadOrderEvent;
 import com.vuducminh.nicefoodserver.eventbus.ToastEvent;
-import com.vuducminh.nicefoodserver.ui.order.OrderFragment;
-import com.vuducminh.nicefoodserver.ui.order.OrderViewModel;
-
+import com.vuducminh.nicefoodserver.model.OrderModel;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -59,9 +46,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Map;
-import java.util.Random;
-
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -69,8 +53,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private NavController navController;
     private int menuClick = -1;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +64,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         subscribeToTopic(Common.createTopicOrder());
         updatToken();
 
-      /**  FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
         reference.child(Common.currentServerUser.getRestaurant())
                 .child(Common.ORDER_REF)
@@ -90,17 +74,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        Toast.makeText(HomeActivity.this, " you have a new order ", Toast.LENGTH_SHORT).show();
-                        LoadOrderEvent loadOrderEvent = new LoadOrderEvent();
-                        orderViewModel.loadOrderByStatus(loadOrderEvent.getStatus());
-                        orderViewModel.notifyAll();
+                            Toast.makeText(HomeActivity.this, " you have a new order ", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });**/
+                });
+
+
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -123,7 +107,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
     private void updatToken() {
         FirebaseInstanceId.getInstance()
                 .getInstanceId().addOnFailureListener(e -> Toast.makeText(HomeActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show())
@@ -140,8 +123,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
                 })
                 .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
-                        Toast.makeText(this,"welcome",Toast.LENGTH_SHORT).show();
+                    if(!task.isSuccessful()) {
+                        Toast.makeText(this,"Failed: "+task.isSuccessful(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }
