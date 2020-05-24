@@ -82,6 +82,9 @@ public class Common {
             case 2: {
                 return "Shipped";
             }
+            case 3: {
+                return "preparing";
+            }
             case -1: {
                 return "Cancelled";
             }

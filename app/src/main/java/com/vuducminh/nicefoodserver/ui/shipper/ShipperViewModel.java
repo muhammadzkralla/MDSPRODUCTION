@@ -75,7 +75,7 @@ public class ShipperViewModel extends ViewModel implements IShipperLoadcallbackL
     }
 
     @Override
-    public void onShipperLoadSuccess(int position, OrderModel orderModel, List<ShipperModel> shipperModels, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed) {
+    public void onShipperLoadSuccess(int position, OrderModel orderModel, List<ShipperModel> shipperModels, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed , RadioButton rdi_preparing) {
 
     }
 

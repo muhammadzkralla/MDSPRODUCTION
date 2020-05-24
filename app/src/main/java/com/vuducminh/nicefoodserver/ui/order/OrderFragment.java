@@ -220,17 +220,24 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         AlertDialog.Builder builder;
         if (orderModel.getOrderStatus() == 0) {
             layout_dialog = LayoutInflater.from(getContext())
-                    .inflate(R.layout.layout_dialog_shipping, null);
+                    .inflate(R.layout.layout_dialog_preparing, null);
 
             //recycler_shipper = layout_dialog.findViewById(R.id.recycler_shippers);
-            builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+            builder = new AlertDialog.Builder(getContext())
                     .setView(layout_dialog);
         } else if (orderModel.getOrderStatus() == -1) {
             layout_dialog = LayoutInflater.from(getContext())
                     .inflate(R.layout.layout_dialog_cancelled, null);
             builder = new AlertDialog.Builder(getContext())
                     .setView(layout_dialog);
-        } else {
+        }
+        else if(orderModel.getOrderStatus() == 3){
+            layout_dialog = LayoutInflater.from(getContext())
+                    .inflate(R.layout.layout_dialog_shipping, null);
+            builder = new AlertDialog.Builder(getContext())
+                    .setView(layout_dialog);
+        }
+        else {
             layout_dialog = LayoutInflater.from(getContext())
                     .inflate(R.layout.layout_dialog_shipped, null);
             builder = new AlertDialog.Builder(getContext())
@@ -241,6 +248,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         Button btn_ok = (Button) layout_dialog.findViewById(R.id.btn_ok);
         Button btn_cancle = (Button) layout_dialog.findViewById(R.id.btn_cancle);
 
+        RadioButton rdi_preparing = (RadioButton) layout_dialog.findViewById(R.id.rdi_preparing);
         RadioButton rdi_shipping = (RadioButton) layout_dialog.findViewById(R.id.rdi_shipping);
         RadioButton rdi_shipped = (RadioButton) layout_dialog.findViewById(R.id.rdi_shipped);
         RadioButton rdi_cancelled = (RadioButton) layout_dialog.findViewById(R.id.rdi_canncelled);
@@ -257,16 +265,16 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
 
         if (orderModel.getOrderStatus() == 0) {
             loadShipperList(position, orderModel, dialog, btn_ok, btn_cancle,
-                    rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed);
+                    rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed,rdi_preparing);
         } else {
             showDialog(position, orderModel, dialog, btn_ok, btn_cancle,
-                    rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed);
+                    rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed,rdi_preparing);
         }
 
 
     }
 
-    private void loadShipperList(int position, OrderModel orderModel, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed) {
+    private void loadShipperList(int position, OrderModel orderModel, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed,RadioButton rdi_preparing) {
         List<ShipperModel> tempList = new ArrayList<>();
         DatabaseReference shipperRef = FirebaseDatabase.getInstance().getReference(CommonAgr.SHIPPER);
         Query shipperActive = shipperRef.orderByChild("active").equalTo(true);
@@ -281,7 +289,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                 shipperLoadcallbackListener.onShipperLoadSuccess(position, orderModel, tempList,
                         dialog,
                         btn_ok, btn_cancle,
-                        rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed);
+                        rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed,rdi_preparing);
 
             }
 
@@ -292,7 +300,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         });
     }
 
-    private void showDialog(int position, OrderModel orderModel, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed) {
+    private void showDialog(int position, OrderModel orderModel, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed,RadioButton rdi_preparing) {
         dialog.show();
         //Custom dialog
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -319,6 +327,12 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                 dialog.dismiss();
                 updateOrder(position, orderModel, 0);
             }
+
+            else if (rdi_preparing != null && rdi_preparing.isChecked()){
+                dialog.dismiss();
+                updateOrder(position, orderModel, 3);
+            }
+
             else if (rdi_delete != null && rdi_delete.isChecked()) {
                 deleteOrder(position, orderModel);
             }
@@ -559,7 +573,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
     }
 
     @Override
-    public void onShipperLoadSuccess(int position, OrderModel orderModel, List<ShipperModel> shipperModels, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed) {
+    public void onShipperLoadSuccess(int position, OrderModel orderModel, List<ShipperModel> shipperModels, AlertDialog dialog, Button btn_ok, Button btn_cancle, RadioButton rdi_shipping, RadioButton rdi_shipped, RadioButton rdi_cancelled, RadioButton rdi_delete, RadioButton rdi_restore_placed, RadioButton rdi_preparing) {
         if (recycler_shipper != null) {
             recycler_shipper.setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -572,7 +586,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         showDialog(position, orderModel,
                 dialog,
                 btn_ok, btn_cancle,
-                rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed);
+                rdi_shipping, rdi_shipped, rdi_cancelled, rdi_delete, rdi_restore_placed,rdi_preparing);
     }
 
     @Override

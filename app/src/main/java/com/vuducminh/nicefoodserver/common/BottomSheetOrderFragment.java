@@ -26,6 +26,12 @@ public class BottomSheetOrderFragment extends BottomSheetDialogFragment {
         dismiss();
     }
 
+    @OnClick(R.id.preparing_filter)
+    public void onPreparingFilterClick() {
+        EventBus.getDefault().postSticky(new LoadOrderEvent(3));
+        dismiss();
+    }
+
     @OnClick(R.id.shipping_filter)
     public void onShippingFilterClick() {
         EventBus.getDefault().postSticky(new LoadOrderEvent(1));
