@@ -119,6 +119,12 @@ public class MostPopularFragment extends Fragment {
         MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(),recycler_most_popular,200) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
+                buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#333639"),
+                        position -> {
+                            Common.mostPopularSelected = mostPopularModels.get(position);
+
+                            showDeleteDialog();
+                        }));
 
                 buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
                         position -> {
@@ -131,6 +137,43 @@ public class MostPopularFragment extends Fragment {
         };
 
     }
+    private void showDeleteDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+        builder.setTitle("Delete");
+        builder.setMessage("Do you really want to delete this item?");
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialogInterface.dismiss();
+            }
+        }).setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteMostPopular();
+            }
+        });
+
+        androidx.appcompat.app.AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+    private void deleteMostPopular() {
+        FirebaseDatabase.getInstance()
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child(Common.MOST_POPULAR)
+                .child(Common.mostPopularSelected.getKey())
+                .removeValue()
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                })
+                .addOnCompleteListener(task -> {
+                    mViewModel.loadMostPopular();
+                    EventBus.getDefault().postSticky(new ToastEvent(false,true));
+                });
+    }
+
+
     private void showUpdateDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
         builder.setTitle("Update");
