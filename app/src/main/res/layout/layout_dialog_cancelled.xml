@@ -55,11 +55,12 @@
             android:checked="true"
             android:textSize="22sp"/>
 
-        <RadioButton
+       <RadioButton
             android:id="@+id/rdi_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="Delete"
+           android:clickable="false"
             android:fontFamily="@font/brandon_medium"
             android:textColor="@android:color/holo_red_dark"
             android:checked="true"
