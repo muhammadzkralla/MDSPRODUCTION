@@ -9,4 +9,49 @@
         android:id="@+id/recycler_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/open"
+        android:layout_width="51dp"
+        android:layout_height="24dp"
+        android:layout_above="@id/closed"
+        android:layout_marginBottom="27dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginTop="-22dp"
+        android:backgroundTint="#07bca4"
+        android:elevation="6dp"
+        android:visibility="invisible"
+        app:fabSize="auto"
+        app:pressedTranslationZ="12dp"
+        android:layout_alignParentRight="true"
+        android:tooltipText="open"
+        app:srcCompat="@drawable/ic_indeterminate_check_box_black_24dp"/>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/closed"
+        android:layout_width="51dp"
+        android:layout_height="24dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginTop="-22dp"
+        android:backgroundTint="#07bca4"
+        android:layout_above="@+id/floatingActionButton"
+        android:layout_marginBottom="8dp"
+        android:elevation="6dp"
+        android:visibility="invisible"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/ic_add_circle_black_24dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        app:srcCompat="@drawable/ic_add_circle_black_24dp" />
 </RelativeLayout>

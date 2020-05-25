@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -55,9 +57,30 @@ public class CategoryFragment extends Fragment {
     private CategoryViewModel categoryViewModel;
     private Uri imageUri = null;
 
+    //Floating button
+    private FloatingActionButton fab_main_btn;
+    private FloatingActionButton fab_open_btn;
+    private FloatingActionButton fab_close_btn;
+
+    //bollen
+    private boolean isOpen=false;
+
+    //animation
+    private Animation FadOpen,FadClose;
+
     Unbinder unbinder;
     @BindView(R.id.recycler_menu)
     RecyclerView recycler_menu;
+
+    @BindView(R.id.floatingActionButton)
+     FloatingActionButton floatingActionButton;
+
+    @BindView(R.id.open)
+     FloatingActionButton opened;
+
+    @BindView(R.id.closed)
+     FloatingActionButton closed;
+
     AlertDialog dialog;
     LayoutAnimationController layoutAnimationController;
     MyCategoriesAdapter adapter;
@@ -69,6 +92,13 @@ public class CategoryFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
+        //animation connect..
+        FadOpen= AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
+        FadClose=AnimationUtils.loadAnimation(getActivity(),R.anim.fade_close);
+
+
         categoryViewModel =
                 ViewModelProviders.of(this).get(CategoryViewModel.class);
         View root = inflater.inflate(R.layout.fragment_category, container, false);
@@ -90,8 +120,69 @@ public class CategoryFragment extends Fragment {
             recycler_menu.setLayoutAnimation(layoutAnimationController);
         });
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openorclosed();
+
+                if (isOpen){
+                    opened.startAnimation(FadClose);
+                    closed.startAnimation(FadClose);
+                    opened.setClickable(false);
+                    closed.setClickable(false);
+
+
+                    isOpen = false;
+                }else {
+                    opened.startAnimation(FadOpen);
+                    closed.startAnimation(FadOpen);
+                    opened.setClickable(true);
+                    closed.setClickable(true);
+
+
+                    isOpen=true;
+                }
+            }
+        });
+
+
         return root;
+
+
     }
+
+    private void openorclosed() {
+        opened.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRESOpen();
+            }
+        });
+        closed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeRESClosed();
+            }
+        });
+    }
+
+    private void makeRESClosed() {
+        FirebaseDatabase.getInstance()
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child("active").setValue("0");
+        Toast.makeText(getContext(),"your restaurant is now closed",Toast.LENGTH_SHORT).show();
+    }
+
+    private void makeRESOpen() {
+        FirebaseDatabase.getInstance()
+                .getReference(Common.RESTAURANT_REF)
+                .child(Common.currentServerUser.getRestaurant())
+                .child("active").setValue("1");
+        Toast.makeText(getContext(),"your restaurant is now open",Toast.LENGTH_SHORT).show();
+    }
+
 
     private void initView() {
 
@@ -127,6 +218,8 @@ public class CategoryFragment extends Fragment {
             }
         };
     }
+
+
 
     private void showDeleteDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());

@@ -104,10 +104,11 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
     private IShipperLoadcallbackListener shipperLoadcallbackListener;
 
 
-
     @SuppressLint("FragmentLiveDataObserve")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+
 
        /** FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
@@ -153,6 +154,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         });
         return root;
     }
+
 
     private void initViews() {
 
