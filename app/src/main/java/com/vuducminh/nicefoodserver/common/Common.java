@@ -102,7 +102,7 @@ public class Common {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
-                    "Mahalla Delivery", NotificationManager.IMPORTANCE_DEFAULT);
+                    "Mahalla Delivery", NotificationManager.IMPORTANCE_LOW);
             notificationChannel.setDescription("Mahalla_elivery");
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);

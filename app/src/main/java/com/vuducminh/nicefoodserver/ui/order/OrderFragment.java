@@ -446,8 +446,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                                             Map<String, String> notiData = new HashMap<>();
                                             notiData.put(CommonAgr.NOTI_TITLE, "Your order was update");
                                             notiData.put(CommonAgr.NOTI_CONTENT, new StringBuilder("Your order ")
-                                                    .append(orderModel.getKey())
-                                                    .append(" was update to")
+                                                    .append("was update to ")
                                                     .append(Common.convertStatusToString(status)).toString());
 
                                             FCMSendData sendDate = new FCMSendData(tokenModel.getToken(), notiData);
