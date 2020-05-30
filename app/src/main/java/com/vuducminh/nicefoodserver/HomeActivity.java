@@ -2,6 +2,7 @@ package com.vuducminh.nicefoodserver;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.view.MenuItem;
@@ -42,6 +43,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,9 +69,39 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         subscribeToTopic(Common.createTopicOrder());
         updatToken();
+        SharedPreferences sharedPreferences = getSharedPreferences("com.vuducminh.nicefoodserver", MODE_PRIVATE);
+        Switch sw = (Switch) findViewById(R.id.switch1);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    FirebaseDatabase.getInstance()
+                            .getReference(Common.RESTAURANT_REF)
+                            .child(Common.currentServerUser.getRestaurant())
+                            .child("active").setValue("1");
+                    Toast.makeText(HomeActivity.this, "your restaurant is now open", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = getSharedPreferences("com.vuducminh.nicefoodserver", MODE_PRIVATE).edit();
+                    editor.putBoolean("state",true);
+                    editor.commit();
+
+
+                }else {
+                    FirebaseDatabase.getInstance()
+                            .getReference(Common.RESTAURANT_REF)
+                            .child(Common.currentServerUser.getRestaurant())
+                            .child("active").setValue("0");
+                    Toast.makeText(HomeActivity.this, "your restaurant is now closed", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = getSharedPreferences("com.vuducminh.nicefoodserver", MODE_PRIVATE).edit();
+                    editor.putBoolean("state",false);
+                    editor.commit();
+                }
+            }
 
 
 
+
+        });
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference reference = firebaseDatabase.getReference(CommonAgr.RESTAURANT_REF);
         reference.child(Common.currentServerUser.getRestaurant())
@@ -251,7 +284,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             }
-
             case R.id.nav_sign_out: {
                 signOut();
                 break;
@@ -263,6 +295,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         menuClick = menuItem.getItemId();
         return true;
     }
+
 
     private void signOut() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
