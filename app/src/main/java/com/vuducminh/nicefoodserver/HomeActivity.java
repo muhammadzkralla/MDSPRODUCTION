@@ -71,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         updatToken();
         SharedPreferences sharedPreferences = getSharedPreferences("com.vuducminh.nicefoodserver", MODE_PRIVATE);
         Switch sw = (Switch) findViewById(R.id.switch1);
+        sw.setChecked(sharedPreferences.getBoolean("state",true));
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             @Override
