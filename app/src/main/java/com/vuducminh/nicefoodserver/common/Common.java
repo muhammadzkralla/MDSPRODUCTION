@@ -96,26 +96,20 @@ public class Common {
     }
 
     public static void showNotification(Context context, int id, String title, String content, Intent intent) {
-        // Create an Intent for the activity you want to start
-        Intent resultIntent = new Intent(context, MainActivity.class);
-        // Create the TaskStackBuilder and add the intent, which inflates the back stack
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = null;
         if (intent != null) {
-            resultPendingIntent = PendingIntent.getActivity(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent = PendingIntent.getActivity(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
         String NOTIFICATION_CHANNEL_ID = "Dimits_Mahalla_Delivery";
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
-                    "Mahalla Delivery", NotificationManager.IMPORTANCE_LOW);
-            notificationChannel.setDescription("Mahalla_elivery");
+                    "Mahalla_Delivery", NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel.setDescription("Mahalla_Delivery");
             notificationChannel.enableLights(true);
+            notificationChannel.setImportance(NotificationManager.IMPORTANCE_HIGH);
             notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+
             notificationChannel.enableVibration(true);
 
             notificationManager.createNotificationChannel(notificationChannel);
@@ -125,12 +119,14 @@ public class Common {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID);
         builder.setContentTitle(title)
                 .setContentText(content)
-                .setAutoCancel(true)
+                .setAutoCancel(false)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_restaurant_menu_black_24dp));
 
-        if (resultPendingIntent != null) {
-            builder.setContentIntent(resultPendingIntent);
+        if (pendingIntent != null) {
+            builder.setContentIntent(pendingIntent);
         }
         Notification notification = builder.build();
         notificationManager.notify(id, notification);
