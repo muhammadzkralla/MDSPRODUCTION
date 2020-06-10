@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -108,8 +109,8 @@ public class FoodListFragment extends Fragment {
         dialog = new SpotsDialog.Builder().setContext(getContext()).setCancelable(false).build();
 
 
-        ((AppCompatActivity)getActivity())
-                .getSupportActionBar()
+        Objects.requireNonNull(((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                .getSupportActionBar())
                 .setTitle(Common.categorySelected.getName()
                 );
 
@@ -341,7 +342,7 @@ public class FoodListFragment extends Fragment {
                         updateFood(Common.categorySelected.getFoods(),false);
                     });
                 }).addOnProgressListener(taskSnapshot -> {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    long progress = (100 * taskSnapshot.getBytesTransferred() /(long) taskSnapshot.getTotalByteCount());
                     dialog.setMessage(new StringBuilder("Uploading: ").append(progress).append("%"));
                 });
             }
@@ -373,7 +374,7 @@ public class FoodListFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                    if(task.isSuccessful()) {
                        foodListViewModel.getMutableLiveDataFoodList();
-                       EventBus.getDefault().postSticky(new ToastEvent(!isDelete,true));
+                       EventBus.getDefault().postSticky(new ToastEvent(Common.ACTION.UPDATE,true));
                    }
                 });
     }

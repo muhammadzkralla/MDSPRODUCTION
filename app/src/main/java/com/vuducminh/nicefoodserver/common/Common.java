@@ -52,6 +52,12 @@ public class Common {
     public static BestDealsModel bestDealsSelected;
     public static MostPopularModel mostPopularSelected;
 
+    public enum ACTION{
+        CREAT,
+        UPDATE,
+        DELETE
+    }
+
     public static void setSpanString(String welcome, String name, TextView tv_user) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append(welcome);
