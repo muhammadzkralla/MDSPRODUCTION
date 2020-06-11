@@ -317,7 +317,7 @@ public class FoodListFragment extends Fragment {
             updateFood.setName(edt_food_name.getText().toString());
             updateFood.setDescription(edt_food_description.getText().toString());
             updateFood.setPrice(TextUtils.isEmpty(edt_food_price.getText()) ? 0 :
-                    Long.parseLong(edt_food_price.getText().toString()));
+                    Double.parseDouble(edt_food_price.getText().toString()));
 
             if(imageUri != null) {
                 // firebase Storage upload image
