@@ -147,7 +147,7 @@ public class FoodListFragment extends Fragment {
                                            else{
                                                Common.categorySelected.getFoods().remove(foodModel.getPositionInList());  //Remove by index saved
                                            }
-                                           updateFood(Common.categorySelected.getFoods(),true);
+                                           updateFood(Common.categorySelected.getFoods(),Common.ACTION.DELETE);
                                        });
 
                                AlertDialog dialog = builder.create();
@@ -264,22 +264,104 @@ public class FoodListFragment extends Fragment {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_creat)
+            showAddDialog();
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showAddDialog() {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
+        builder.setTitle("Create");
+        builder.setMessage("Please fill information");
+
+        View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_food,null);
+        EditText edt_food_name = (EditText)itemView.findViewById(R.id.edt_food_name);
+        EditText edt_food_price = (EditText)itemView.findViewById(R.id.edt_food_price);
+        EditText edt_food_description = (EditText)itemView.findViewById(R.id.edt_food_description);
+        img_food = (ImageView)itemView.findViewById(R.id.img_food);
+
+        // Set Date
+
+        Glide.with(getContext()).load(R.drawable.ic_add_white_24dp).into(img_food);
+
+        img_food.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_REQUEST);
+        });
+
+        builder.setNegativeButton("CANCLE", (dialogInterface, which) -> {
+            dialogInterface.dismiss();
+        }).setPositiveButton("CREATE", (dialogInterface, which) -> {
+            FoodModel updateFood = new FoodModel();
+            updateFood.setId(UUID.randomUUID().toString());
+            updateFood.setName(edt_food_name.getText().toString());
+            updateFood.setDescription(edt_food_description.getText().toString());
+            updateFood.setPrice(TextUtils.isEmpty(edt_food_price.getText()) ? 0 :
+                    Double.parseDouble(edt_food_price.getText().toString()));
+
+            if(imageUri != null) {
+                // firebase Storage upload image
+                dialog.setMessage("Uploading...");
+                dialog.show();
+
+                String unique_name = UUID.randomUUID().toString();
+                StorageReference imageFolder = storageReference.child("images/"+unique_name);
+
+                imageFolder.putFile(imageUri)
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                dialog.dismiss();
+                                Toast.makeText(getContext(),""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnCompleteListener(task -> {
+                    dialog.dismiss();
+                    imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
+                        updateFood.setImage(uri.toString());
+                        if (Common.categorySelected.getFoods() ==null)
+                            Common.categorySelected.setFoods(new ArrayList<>());
+                        Common.categorySelected.getFoods().add(updateFood);
+                        updateFood(Common.categorySelected.getFoods(),Common.ACTION.CREAT);
+                    });
+                }).addOnProgressListener(taskSnapshot -> {
+                    long progress = (100 * taskSnapshot.getBytesTransferred() /(long) taskSnapshot.getTotalByteCount());
+                    dialog.setMessage(new StringBuilder("Uploading: ").append(progress).append("%"));
+                });
+            }
+            else {
+                if (Common.categorySelected.getFoods() ==null)
+                    Common.categorySelected.setFoods(new ArrayList<>());
+                Common.categorySelected.getFoods().add(updateFood);
+                updateFood(Common.categorySelected.getFoods(),Common.ACTION.CREAT);
+            }
+        });
+
+        builder.setView(itemView);
+        AlertDialog updateDialog = builder.create();
+        updateDialog.show();
+
+    }
+
     private void addtoFirebaseMostPopular(MostPopularModel mostPopularModel) {
-        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
         FirebaseDatabase.getInstance()
                 .getReference(Common.RESTAURANT_REF)
                 .child(Common.currentServerUser.getRestaurant())
                 .child(Common.MOST_POPULAR)
                 .push().setValue(mostPopularModel);
+        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
     }
 
     private void addtoFirebase(BestDealsModel bestDealsModel) {
-        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
         FirebaseDatabase.getInstance()
                 .getReference(Common.RESTAURANT_REF)
                 .child(Common.currentServerUser.getRestaurant())
                 .child(Common.BEST_DEALS)
                 .push().setValue(bestDealsModel);
+        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
     }
 
     private void showUpdateDialog(int position,FoodModel foodModel) {
@@ -339,7 +421,7 @@ public class FoodListFragment extends Fragment {
                     imageFolder.getDownloadUrl().addOnSuccessListener(uri -> {
                         updateFood.setImage(uri.toString());
                         Common.categorySelected.getFoods().set(position,updateFood);
-                        updateFood(Common.categorySelected.getFoods(),false);
+                        updateFood(Common.categorySelected.getFoods(),Common.ACTION.UPDATE);
                     });
                 }).addOnProgressListener(taskSnapshot -> {
                     long progress = (100 * taskSnapshot.getBytesTransferred() /(long) taskSnapshot.getTotalByteCount());
@@ -348,7 +430,7 @@ public class FoodListFragment extends Fragment {
             }
             else {
                 Common.categorySelected.getFoods().set(position,updateFood);
-                updateFood(Common.categorySelected.getFoods(),false);
+                updateFood(Common.categorySelected.getFoods(),Common.ACTION.UPDATE);
             }
         });
 
@@ -358,7 +440,7 @@ public class FoodListFragment extends Fragment {
 
     }
 
-    private void updateFood(List<FoodModel> foods, boolean isDelete) {
+    private void updateFood(List<FoodModel> foods, Common.ACTION action) {
         Map<String,Object> updateData = new HashMap<>();
         updateData.put("foods",foods);
 
@@ -374,7 +456,7 @@ public class FoodListFragment extends Fragment {
                 .addOnCompleteListener(task -> {
                    if(task.isSuccessful()) {
                        foodListViewModel.getMutableLiveDataFoodList();
-                       EventBus.getDefault().postSticky(new ToastEvent(Common.ACTION.UPDATE,true));
+                       EventBus.getDefault().postSticky(new ToastEvent(action,true));
                    }
                 });
     }
