@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else {
                                 //gotoHomeActivity(userModel);
+                                showAcitveDialog();
                                 Toast.makeText(MainActivity.this,"You must be allowed from Admin to access this app",Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -107,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this,""+databaseError.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void showAcitveDialog() {
+        androidx.appcompat.app.AlertDialog.Builder active = new androidx.appcompat.app.AlertDialog.Builder(this);
+        active.setTitle("ALERT !");
+        active.setMessage("You have signed in successfully, Ask Admins to Activate your account and specify your restaurant.");
+        active.setNegativeButton("CLOSE THE APP", (dialogInterface, which) -> {
+            finish();
+
+        });
+        active.show();
+
     }
 
     private void showRegisterDialog(FirebaseUser user) {
