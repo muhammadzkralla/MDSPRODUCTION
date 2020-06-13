@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                                 gotoHomeActivity(userModel);
                             }
                             else {
-                                gotoHomeActivity(userModel);
+                                //gotoHomeActivity(userModel);
                                 Toast.makeText(MainActivity.this,"You must be allowed from Admin to access this app",Toast.LENGTH_SHORT).show();
                             }
                         }
