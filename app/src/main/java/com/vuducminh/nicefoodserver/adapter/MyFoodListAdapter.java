@@ -49,7 +49,7 @@ public class MyFoodListAdapter extends RecyclerView.Adapter<MyFoodListAdapter.My
         holder.tv_food_name.setText(new StringBuffer("")
                 .append(foodModelList.get(position).getName()));
 
-        holder.tv_food_price.setText(new StringBuffer("$")
+        holder.tv_food_price.setText(new StringBuffer("L.E ")
                 .append(foodModelList.get(position).getPrice()));
 
         // Event Bus
