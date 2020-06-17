@@ -33,13 +33,6 @@
     </group>
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_shipper"
-            android:icon="@drawable/ic_local_shipping_black_24dp"
-            android:title="@string/menu_shipper" />
-    </group>
-
-    <group android:checkableBehavior="single">
 
 
     <item
