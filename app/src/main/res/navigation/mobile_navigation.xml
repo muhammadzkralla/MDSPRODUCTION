@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_category"
-        android:name="com.vuducminh.nicefoodserver.ui.category.CategoryFragment"
+        android:name="com.dimits.mahalladeliveryserver.ui.category.CategoryFragment"
         android:label="@string/menu_category"
         tools:layout="@layout/fragment_category" />
 
     <fragment
         android:id="@+id/nav_food_list"
-        android:name="com.vuducminh.nicefoodserver.ui.food_list.FoodListFragment"
+        android:name="com.dimits.mahalladeliveryserver.ui.food_list.FoodListFragment"
         android:label="@string/menu_food_list"
         tools:layout="@layout/fragment_food_list">
 
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/nav_order"
-        android:name="com.vuducminh.nicefoodserver.ui.order.OrderFragment"
+        android:name="com.dimits.mahalladeliveryserver.ui.order.OrderFragment"
         android:label="@string/menu_order"
         tools:layout="@layout/fragment_order">
         <action
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/nav_shipper"
-        android:name="com.vuducminh.nicefoodserver.ui.shipper.ShipperFragment"
+        android:name="com.dimits.mahalladeliveryserver.ui.shipper.ShipperFragment"
         android:label="@string/menu_shipper"
         tools:layout="@layout/fragment_shipper">
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_best_deals"
-        android:name="com.vuducminh.nicefoodserver.ui.best_deals.BestDealsFragment"
+        android:name="com.dimits.mahalladeliveryserver.ui.best_deals.BestDealsFragment"
         android:label="@string/menu_best_deal"
         tools:layout="@layout/best_deals_fragment">
         <action
@@ -61,7 +61,7 @@
 
     <fragment
         android:id="@+id/nav_most_popular"
-        android:name="com.vuducminh.nicefoodserver.ui.most_popular.MostPopularFragment"
+        android:name="com.dimits.mahalladeliveryserver.ui.most_popular.MostPopularFragment"
         android:label="@string/menu_most_popular"
         tools:layout="@layout/most_popular_fragment">
         <action

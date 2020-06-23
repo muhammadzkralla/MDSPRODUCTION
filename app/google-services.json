@@ -82,6 +82,43 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:107284442175:android:bd5994a813d7fa2eb89c8a",
+        "android_client_info": {
+          "package_name": "com.dimits.mahalladeliveryserver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107284442175-os072m8ok0nlnjv1acd68u8rom77ai4v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dimits.mahalladeliveryserver",
+            "certificate_hash": "f2a1b7a52933e31adaff93699d5d830da2aaa5a8"
+          }
+        },
+        {
+          "client_id": "107284442175-o43eghijpnsj4r6k9s8d89dperqj47gh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXMYUA5WzQWOgcWPguhI6rDMDzM0AT7bo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107284442175-o43eghijpnsj4r6k9s8d89dperqj47gh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:107284442175:android:dac685b2b97ce7b6b89c8a",
         "android_client_info": {
           "package_name": "com.vuducminh.nicefood"
