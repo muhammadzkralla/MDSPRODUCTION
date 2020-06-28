@@ -247,7 +247,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
             case R.id.nav_category: {
                 if (menuItem.getItemId() != menuClick) {
-                    navController.popBackStack();  // //remove all back stack
+                    //navController.popBackStack();  // //remove all back stack
                     navController.navigate(R.id.nav_category);
                 }
                 break;
@@ -256,14 +256,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_order: {
                 if (menuItem.getItemId() != menuClick)
                 {
-                    navController.popBackStack();
+                    //navController.popBackStack();
                     navController.navigate(R.id.nav_order);
                 }
                 break;
 
             } case R.id.nav_best_deals: {
                 if (menuItem.getItemId() != menuClick) {
-                    navController.popBackStack();
+                    //navController.popBackStack();
                     navController.navigate(R.id.nav_best_deals);
                 }
                 break;
@@ -271,7 +271,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_most_popular: {
                 if (menuItem.getItemId() != menuClick) {
-                    navController.popBackStack();
+                   // navController.popBackStack();
                     navController.navigate(R.id.nav_most_popular);
                 }
                 break;
