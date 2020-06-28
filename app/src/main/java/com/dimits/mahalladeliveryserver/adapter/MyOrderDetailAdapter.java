@@ -46,18 +46,18 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
     @Override
     public void onBindViewHolder(@NonNull MyViewHOlder holder, int position) {
         Glide.with(context).load(cartItemList.get(position).getFoodImage()).centerCrop().into(holder.img_food_img);
-        holder.txt_food_quantity.setText(new StringBuilder("Quantity: ").append(cartItemList.get(position).getFoodQuantity()));
+        holder.txt_food_quantity.setText(new StringBuilder("الكمية: ").append(cartItemList.get(position).getFoodQuantity()));
         holder.txt_food_name.setText(cartItemList.get(position).getFoodName());
-        holder.txt_phone.setText(cartItemList.get(position).getUserPhone());
-        holder.txt_price.setText(new StringBuilder("Price : ").append(cartItemList.get(position).getFoodPrice() + cartItemList.get(position).getFoodExtraPrice()).toString());
+        holder.txt_phone.setText(new StringBuilder("رقم العميل : ").append(cartItemList.get(position).getUserPhone()));
+        holder.txt_price.setText(new StringBuilder("السعر : ").append(cartItemList.get(position).getFoodPrice() + cartItemList.get(position).getFoodExtraPrice()).toString());
         if (!cartItemList.get(position).getFoodSize().equals("Default")) {
             SizeModel sizeModel = gson.fromJson(cartItemList.get(position).getFoodSize(), new TypeToken<SizeModel>() {}.getType());
             if (sizeModel != null) {
-                holder.txt_size.setText(new StringBuilder("Size: ").append(sizeModel.getName()));
+                holder.txt_size.setText(new StringBuilder("الحجم: ").append(sizeModel.getName()));
             }
         }
         else{
-            holder.txt_size.setText(new StringBuilder("Size: Default"));
+            holder.txt_size.setText(new StringBuilder("الحجم: Default"));
         }
         if (!cartItemList.get(position).getFoodAddon().equals("Default")){
             List<AddonModel> addonModels = gson.fromJson(cartItemList.get(position).getFoodAddon(),new TypeToken<List<AddonModel>>(){}.getType());
@@ -66,12 +66,12 @@ public class MyOrderDetailAdapter extends RecyclerView.Adapter<MyOrderDetailAdap
                 for (AddonModel addonModel : addonModels){
                     addonString.append(addonModel.getName()).append(",  ");
                     addonString.delete(addonString.length()-1,addonString.length()); // Remove Last Character
-                    holder.txt_food_add_on.setText(new StringBuilder("Addon: ").append(addonString));
+                    holder.txt_food_add_on.setText(new StringBuilder("الاضافات: ").append(addonString));
 
                 }
             }
         }else{
-            holder.txt_food_add_on.setText(new StringBuilder("Addon: Default"));
+            holder.txt_food_add_on.setText(new StringBuilder("الاضافات: Default"));
         }
     }
 

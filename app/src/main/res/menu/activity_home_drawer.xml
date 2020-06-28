@@ -13,7 +13,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_best_deals"
-            android:icon="@drawable/ic_star_golden_24dp"
+            android:icon="@drawable/ic_star_black_24dp"
             android:title="@string/menu_best_deal" />
     </group>
     <group android:checkableBehavior="single">

@@ -128,17 +128,17 @@ public class FoodListFragment extends Fragment {
         MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(),recycler_food_list,width/7) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#9B0000"),
+                buf.add(new MyButton(getContext(), "مسح", 30, 0, Color.parseColor("#9B0000"),
                         position -> {
                            if(foodModelList != null) {
                                Common.selectedFood = foodModelList.get(position);
                                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                               builder.setTitle("DELETE")
-                                       .setMessage("Do you want to delete this food ?")
-                                       .setNegativeButton("CANCLE", (dialogInterface, which) -> {
+                               builder.setTitle("مسح")
+                                       .setMessage("هل انت متاكد؟")
+                                       .setNegativeButton("الغاء", (dialogInterface, which) -> {
                                            dialogInterface.dismiss();
                                        })
-                                       .setPositiveButton("DELETE", (dialog, which) -> {
+                                       .setPositiveButton("مسح", (dialog, which) -> {
                                            FoodModel foodModel = adapter.getItemAtPosition(position);   //Get item in adapter
                                            if(foodModel.getPositionInList() == 0) {
                                                Common.categorySelected.getFoods().remove(position);   // if == -1, do nothing
@@ -156,7 +156,7 @@ public class FoodListFragment extends Fragment {
                         })
                 );
 
-                buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
+                buf.add(new MyButton(getContext(), "تعديل", 30, 0, Color.parseColor("#560027"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
                             if(foodModel.getPositionInList() == 0) {
@@ -167,7 +167,7 @@ public class FoodListFragment extends Fragment {
                             }
                         })
                 );
-                buf.add(new MyButton(getContext(), "Size", 30, 0, Color.parseColor("#12005E"),
+                buf.add(new MyButton(getContext(), "اضافة حجم", 30, 0, Color.parseColor("#12005E"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
                             if(foodModel.getPositionInList() == 0) {
@@ -188,7 +188,7 @@ public class FoodListFragment extends Fragment {
                         })
                 );
 
-                buf.add(new MyButton(getContext(), "Addon", 30, 0, Color.parseColor("#336699"),
+                buf.add(new MyButton(getContext(), "اضافات", 30, 0, Color.parseColor("#336699"),
                         position -> {
                             FoodModel foodModel = adapter.getItemAtPosition(position);
                             if(foodModel.getPositionInList() == 0) {
@@ -212,12 +212,12 @@ public class FoodListFragment extends Fragment {
                             if(foodModelList != null) {
                                 Common.selectedFood = foodModelList.get(position);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setTitle("Add")
-                                        .setMessage("Do you want to add this food to recommended?")
-                                        .setNegativeButton("CANCLE", (dialogInterface, which) -> {
+                                builder.setTitle("Recommend?")
+                                        .setMessage("هل تريد اضافة ذلك الي Recommended ؟")
+                                        .setNegativeButton("الغاء", (dialogInterface, which) -> {
                                             dialogInterface.dismiss();
                                         })
-                                        .setPositiveButton("ADD", (dialog, which) -> {
+                                        .setPositiveButton("اضافة", (dialog, which) -> {
                                             BestDealsModel bestDealsModel = new BestDealsModel();
                                             bestDealsModel.setFood_id(Common.selectedFood.getId());
                                             bestDealsModel.setMenu_id(Common.categorySelected.getMenu_id());
@@ -237,12 +237,12 @@ public class FoodListFragment extends Fragment {
                             if(foodModelList != null) {
                                 Common.selectedFood = foodModelList.get(position);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                                builder.setTitle("Add")
-                                        .setMessage("Do you want to add this food to common food?")
-                                        .setNegativeButton("CANCLE", (dialogInterface, which) -> {
+                                builder.setTitle("Common Food?")
+                                        .setMessage("هل تريد اضافة ذلك الي Common Food ؟")
+                                        .setNegativeButton("الغاء", (dialogInterface, which) -> {
                                             dialogInterface.dismiss();
                                         })
-                                        .setPositiveButton("ADD", (dialog, which) -> {
+                                        .setPositiveButton("اضافة", (dialog, which) -> {
                                             MostPopularModel mostPopularModel = new MostPopularModel();
 
                                             mostPopularModel.setFood_id(Common.selectedFood.getId());
@@ -273,8 +273,8 @@ public class FoodListFragment extends Fragment {
 
     private void showAddDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("Create");
-        builder.setMessage("Please fill information");
+        builder.setTitle("اضافة محتوي جديد");
+        builder.setMessage("الرجاء ملئ البيانات");
 
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_food,null);
         EditText edt_food_name = (EditText)itemView.findViewById(R.id.edt_food_name);
@@ -290,12 +290,12 @@ public class FoodListFragment extends Fragment {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_REQUEST);
+            startActivityForResult(Intent.createChooser(intent,"اختر الصورة"),PICK_IMAGE_REQUEST);
         });
 
-        builder.setNegativeButton("CANCLE", (dialogInterface, which) -> {
+        builder.setNegativeButton("الغاء", (dialogInterface, which) -> {
             dialogInterface.dismiss();
-        }).setPositiveButton("CREATE", (dialogInterface, which) -> {
+        }).setPositiveButton("اضافة", (dialogInterface, which) -> {
             FoodModel updateFood = new FoodModel();
             updateFood.setId(UUID.randomUUID().toString());
             updateFood.setName(edt_food_name.getText().toString());
@@ -352,7 +352,7 @@ public class FoodListFragment extends Fragment {
                 .child(Common.currentServerUser.getRestaurant())
                 .child(Common.MOST_POPULAR)
                 .push().setValue(mostPopularModel);
-        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"تم",Toast.LENGTH_SHORT).show();
     }
 
     private void addtoFirebase(BestDealsModel bestDealsModel) {
@@ -361,13 +361,13 @@ public class FoodListFragment extends Fragment {
                 .child(Common.currentServerUser.getRestaurant())
                 .child(Common.BEST_DEALS)
                 .push().setValue(bestDealsModel);
-        Toast.makeText(getContext(),"Done",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"تم",Toast.LENGTH_SHORT).show();
     }
 
     private void showUpdateDialog(int position,FoodModel foodModel) {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("Update");
-        builder.setMessage("Please fill information");
+        builder.setTitle("تعديل");
+        builder.setMessage("الرجاء ملئ البيانات");
 
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_food,null);
         EditText edt_food_name = (EditText)itemView.findViewById(R.id.edt_food_name);
@@ -389,12 +389,12 @@ public class FoodListFragment extends Fragment {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_REQUEST);
+            startActivityForResult(Intent.createChooser(intent,"اختر الصورة"),PICK_IMAGE_REQUEST);
         });
 
-        builder.setNegativeButton("CANCLE", (dialogInterface, which) -> {
+        builder.setNegativeButton("الغاء", (dialogInterface, which) -> {
             dialogInterface.dismiss();
-        }).setPositiveButton("UPDATE", (dialogInterface, which) -> {
+        }).setPositiveButton("تعديل", (dialogInterface, which) -> {
             FoodModel updateFood = foodModel;
             updateFood.setName(edt_food_name.getText().toString());
             updateFood.setDescription(edt_food_description.getText().toString());

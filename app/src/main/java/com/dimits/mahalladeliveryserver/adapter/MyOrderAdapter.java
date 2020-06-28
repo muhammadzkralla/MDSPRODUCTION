@@ -70,9 +70,9 @@ public class MyOrderAdapter  extends RecyclerView.Adapter<MyOrderAdapter.MyViewH
         Common.setSpanStringColor("Phone : ",orderModel.getUserPhone(),
                 holder.phone, Color.parseColor("#00574B"));
         Common.setSpanStringColor("Comment : ",orderModel.getCommet(),
-                holder.comment, Color.parseColor("#00574B"));
+                holder.comment, Color.parseColor("#f20c10"));
         Common.setSpanStringColor("address : ",orderModel.getShippingAddress(),
-                holder.address, Color.parseColor("#00574B"));
+                holder.address, Color.parseColor("#f20c10"));
 
 
 

@@ -131,7 +131,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                 adapter = new MyOrderAdapter(getContext(), orderModels);
                 recycler_order.setAdapter(adapter);
                 recycler_order.setLayoutAnimation(layoutAnimationControllerl);
-                tv_order_filter.setText(new StringBuilder("Orders (")
+                tv_order_filter.setText(new StringBuilder("الطلبات (")
                         .append(orderModels.size())
                         .append(")"));
             }
@@ -185,7 +185,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
                                     }).check();
                         })
                 );**/
-                buf.add(new MyButton(getContext(), "Edit", 30, 0, Color.parseColor("#336699"),
+                buf.add(new MyButton(getContext(), "تعديل الحالة", 30, 0, Color.parseColor("#336699"),
                         position -> {
                             showEditDialog(adapter.getItemAtPosition(position), position);
 
@@ -244,7 +244,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
         TextView tv_status = (TextView) layout_dialog.findViewById(R.id.tv_status);
 
         //Set Data
-        tv_status.setText(new StringBuilder("Order Stauts(")
+        tv_status.setText(new StringBuilder("حالة الطلب(")
                 .append(Common.convertStatusToString(orderModel.getOrderStatus())));
         //Create Dialog
         AlertDialog dialog = builder.create();
@@ -475,7 +475,7 @@ public class OrderFragment extends Fragment implements IShipperLoadcallbackListe
 
 
     private void updateTextCounter() {
-        tv_order_filter.setText(new StringBuilder("Orders (")
+        tv_order_filter.setText(new StringBuilder("الطلبات (")
                 .append(adapter.getItemCount())
                 .append(")"));
     }
