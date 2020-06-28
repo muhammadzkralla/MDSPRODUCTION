@@ -61,13 +61,8 @@ public class CategoryFragment extends Fragment {
     private CategoryViewModel categoryViewModel;
     private Uri imageUri = null;
 
-    //Floating button
-    private FloatingActionButton fab_main_btn;
-    private FloatingActionButton fab_open_btn;
-    private FloatingActionButton fab_close_btn;
 
-    //bollen
-    private boolean isOpen = false;
+
 
     //animation
     private Animation FadOpen, FadClose;
@@ -76,14 +71,7 @@ public class CategoryFragment extends Fragment {
     @BindView(R.id.recycler_menu)
     RecyclerView recycler_menu;
 
-    @BindView(R.id.floatingActionButton)
-    FloatingActionButton floatingActionButton;
 
-    @BindView(R.id.open)
-    FloatingActionButton opened;
-
-    @BindView(R.id.closed)
-    FloatingActionButton closed;
 
     AlertDialog dialog;
     LayoutAnimationController layoutAnimationController;
@@ -98,9 +86,6 @@ public class CategoryFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        //animation connect..
-        FadOpen = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_open);
-        FadClose = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_close);
 
 
         categoryViewModel =
@@ -123,69 +108,9 @@ public class CategoryFragment extends Fragment {
             recycler_menu.setAdapter(adapter);
             recycler_menu.setLayoutAnimation(layoutAnimationController);
         });
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                openorclosed();
-
-                if (isOpen) {
-                    opened.startAnimation(FadClose);
-                    closed.startAnimation(FadClose);
-                    opened.setClickable(false);
-                    closed.setClickable(false);
-
-
-                    isOpen = false;
-                } else {
-                    opened.startAnimation(FadOpen);
-                    closed.startAnimation(FadOpen);
-                    opened.setClickable(true);
-                    closed.setClickable(true);
-
-
-                    isOpen = true;
-                }
-            }
-        });
-
-
         return root;
 
 
-    }
-
-
-    private void openorclosed() {
-        opened.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeRESOpen();
-            }
-        });
-        closed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makeRESClosed();
-            }
-        });
-    }
-
-    private void makeRESClosed() {
-        FirebaseDatabase.getInstance()
-                .getReference(Common.RESTAURANT_REF)
-                .child(Common.currentServerUser.getRestaurant())
-                .child("active").setValue("0");
-        Toast.makeText(getContext(), "your restaurant is now closed", Toast.LENGTH_SHORT).show();
-    }
-
-    private void makeRESOpen() {
-        FirebaseDatabase.getInstance()
-                .getReference(Common.RESTAURANT_REF)
-                .child(Common.currentServerUser.getRestaurant())
-                .child("active").setValue("1");
-        Toast.makeText(getContext(), "your restaurant is now open", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -205,7 +130,7 @@ public class CategoryFragment extends Fragment {
         MySwiperHelper mySwiperHelper = new MySwiperHelper(getContext(), recycler_menu, 200) {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
-                buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#333639"),
+                buf.add(new MyButton(getContext(), getString(R.string.delete), 30, 0, Color.parseColor("#333639"),
                         position -> {
                             Common.categorySelected = categoryModels.get(position);
 
@@ -213,7 +138,7 @@ public class CategoryFragment extends Fragment {
                         })
                 );
 
-                buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
+                buf.add(new MyButton(getContext(), getString(R.string.update), 30, 0, Color.parseColor("#560027"),
                         position -> {
                             Common.categorySelected = categoryModels.get(position);
 
@@ -242,8 +167,8 @@ public class CategoryFragment extends Fragment {
 
     private void showAddDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("Creat");
-        builder.setMessage("Please fill information");
+        builder.setTitle(getString(R.string.create));
+        builder.setMessage(getString(R.string.pleasefillinformation));
 
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_category, null);
         EditText edt_category_name = (EditText) itemView.findViewById(R.id.edt_category_name);
@@ -261,9 +186,9 @@ public class CategoryFragment extends Fragment {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         });
 
-        builder.setNegativeButton("CANCLE", (dialogInterface, which) -> {
+        builder.setNegativeButton(getString(R.string.cancel), (dialogInterface, which) -> {
             dialogInterface.dismiss();
-        }).setPositiveButton("Creat", (dialogInterface, which) -> {
+        }).setPositiveButton(getString(R.string.create), (dialogInterface, which) -> {
 
 
 
@@ -311,11 +236,11 @@ public class CategoryFragment extends Fragment {
 
     private void showDeleteDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("Delete");
+        builder.setTitle(getString(R.string.delete));
         builder.setMessage("Are you sure you want this?");
-        builder.setNegativeButton("Cancel", (dialog1, which) ->
+        builder.setNegativeButton(getString(R.string.cancel), (dialog1, which) ->
                 dialog1.dismiss());
-        builder.setPositiveButton("Delete", ((dialog1, which) -> deleteCategory()));
+        builder.setPositiveButton(getString(R.string.delete), ((dialog1, which) -> deleteCategory()));
         androidx.appcompat.app.AlertDialog dialog = builder.create();
         dialog.show();
     }
@@ -338,8 +263,8 @@ public class CategoryFragment extends Fragment {
 
     private void showUpdateDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("Update");
-        builder.setMessage("Please fill information");
+        builder.setTitle(getString(R.string.update));
+        builder.setMessage(getString(R.string.pleasefillinformation));
 
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_category, null);
         EditText edt_category_name = (EditText) itemView.findViewById(R.id.edt_category_name);
@@ -358,9 +283,9 @@ public class CategoryFragment extends Fragment {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         });
 
-        builder.setNegativeButton("CANCLE", (dialogInterface, which) -> {
+        builder.setNegativeButton(getString(R.string.cancel), (dialogInterface, which) -> {
             dialogInterface.dismiss();
-        }).setPositiveButton("UPDATE", (dialogInterface, which) -> {
+        }).setPositiveButton(getString(R.string.update), (dialogInterface, which) -> {
             Map<String, Object> updateDate = new HashMap<>();
             updateDate.put("name", edt_category_name.getText().toString());
 

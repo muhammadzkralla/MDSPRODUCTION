@@ -104,6 +104,10 @@ public class Common {
     public static void showNotification(Context context, int id, String title, String content, Intent intent) {
         // Create an Intent for the activity you want to start
         Intent resultIntent = new Intent(context, MainActivity.class);
+
+
+       // PendingIntent full = PendingIntent.getActivities(context,0,new Intent[]{resultIntent},PendingIntent.FLAG_UPDATE_CURRENT);
+
         // Create the TaskStackBuilder and add the intent, which inflates the back stack
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(resultIntent);
@@ -136,6 +140,9 @@ public class Common {
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
+                //.setPriority(NotificationCompat.PRIORITY_HIGH)
+                //.setCategory(NotificationCompat.CATEGORY_CALL)
+                //.setFullScreenIntent(full,true)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_restaurant_menu_black_24dp));
 
         if (resultPendingIntent != null) {

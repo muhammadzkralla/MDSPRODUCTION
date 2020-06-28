@@ -207,13 +207,13 @@ public class FoodListFragment extends Fragment {
                             }
                         })
                 );
-                buf.add(new MyButton(getContext(), "add to\nbest deal", 25, 0, Color.parseColor("#9B0000"),
+                buf.add(new MyButton(getContext(),"recommended", 25, 0, Color.parseColor("#9B0000"),
                         position -> {
                             if(foodModelList != null) {
                                 Common.selectedFood = foodModelList.get(position);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                                 builder.setTitle("Add")
-                                        .setMessage("Do you want to add this food to best deal?")
+                                        .setMessage("Do you want to add this food to recommended?")
                                         .setNegativeButton("CANCLE", (dialogInterface, which) -> {
                                             dialogInterface.dismiss();
                                         })
@@ -232,13 +232,13 @@ public class FoodListFragment extends Fragment {
                             }
                         })
                 );
-                buf.add(new MyButton(getContext(), "add to\nmost popular", 25, 0, Color.parseColor("#7B0000"),
+                buf.add(new MyButton(getContext(), "Common Food", 25, 0, Color.parseColor("#7B0000"),
                         position -> {
                             if(foodModelList != null) {
                                 Common.selectedFood = foodModelList.get(position);
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                                 builder.setTitle("Add")
-                                        .setMessage("Do you want to add this food to most popular ?")
+                                        .setMessage("Do you want to add this food to common food?")
                                         .setNegativeButton("CANCLE", (dialogInterface, which) -> {
                                             dialogInterface.dismiss();
                                         })

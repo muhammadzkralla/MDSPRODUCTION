@@ -18,6 +18,20 @@
     <string name="menu_order">Orders</string>
     <string name="menu_shipper">Shippers</string>
     <string name="sign_out">Sign Out</string>
-    <string name="menu_best_deal">Best Deal</string>
-    <string name="menu_most_popular">Most Popoular</string>
+    <string name="language">English</string>
+    <string name="menu_best_deal">Recommended</string>
+    <string name="menu_most_popular">Common Food</string>
+    <string name="addrecommend">add to\nrecommended</string>
+
+    <string name="resState">Res Statet</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="create">Create</string>
+    <string name="pleasefillinformation">Please fill information</string>
+    <string name="cancel">Cancle</string>
+
+
+
+
+
 </resources>
