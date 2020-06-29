@@ -120,14 +120,14 @@ public class BestDealsFragment extends Fragment {
             @Override
             public void instantiateMyButton(RecyclerView.ViewHolder viewHolder, List<MyButton> buf) {
 
-                buf.add(new MyButton(getContext(), "مسح", 30, 0, Color.parseColor("#333639"),
+                buf.add(new MyButton(getContext(), "Delete", 30, 0, Color.parseColor("#333639"),
                         position -> {
                             Common.bestDealsSelected = bestDealsModels.get(position);
 
                             showDeleteDialog();
                         }));
 
-                buf.add(new MyButton(getContext(), "تعديل", 30, 0, Color.parseColor("#560027"),
+                buf.add(new MyButton(getContext(), "Update", 30, 0, Color.parseColor("#560027"),
                         position -> {
                             Common.bestDealsSelected = bestDealsModels.get(position);
 
@@ -141,14 +141,14 @@ public class BestDealsFragment extends Fragment {
 
     private void showDeleteDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("مسح");
-        builder.setMessage("هل تريد مسح هذا العنصر؟");
-        builder.setNegativeButton("الغاء", new DialogInterface.OnClickListener() {
+        builder.setTitle("Delete");
+        builder.setMessage("Do you really want to delete this item?");
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 dialogInterface.dismiss();
             }
-        }).setPositiveButton("مسح", new DialogInterface.OnClickListener() {
+        }).setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteBestDeals();
@@ -180,8 +180,8 @@ public class BestDealsFragment extends Fragment {
 
     private void showUpdateDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
-        builder.setTitle("تعديل");
-        builder.setMessage("الرجاء ملئ البيانات");
+        builder.setTitle("Update");
+        builder.setMessage("Please fill information");
 
         View itemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_update_category,null);
         EditText edt_category_name = (EditText)itemView.findViewById(R.id.edt_category_name);
@@ -200,9 +200,9 @@ public class BestDealsFragment extends Fragment {
             startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_REQUEST);
         });
 
-        builder.setNegativeButton("الغاء", (dialogInterface, which) -> {
+        builder.setNegativeButton("CANCLE", (dialogInterface, which) -> {
             dialogInterface.dismiss();
-        }).setPositiveButton("تعديل", (dialogInterface, which) -> {
+        }).setPositiveButton("UPDATE", (dialogInterface, which) -> {
             Map<String,Object> updateDate = new HashMap<>();
             updateDate.put("name",edt_category_name.getText().toString());
 
