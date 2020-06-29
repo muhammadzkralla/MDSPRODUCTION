@@ -237,7 +237,7 @@ public class CategoryFragment extends Fragment {
     private void showDeleteDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
         builder.setTitle(getString(R.string.delete));
-        builder.setMessage("Are you sure you want this?");
+        builder.setMessage("هل انت متاكد من مسح ذلك؟");
         builder.setNegativeButton(getString(R.string.cancel), (dialog1, which) ->
                 dialog1.dismiss());
         builder.setPositiveButton(getString(R.string.delete), ((dialog1, which) -> deleteCategory()));
