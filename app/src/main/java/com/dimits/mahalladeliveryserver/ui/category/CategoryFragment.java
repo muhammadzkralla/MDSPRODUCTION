@@ -175,7 +175,7 @@ public class CategoryFragment extends Fragment {
         img_category = (ImageView) itemView.findViewById(R.id.img_category);
 
         //Set Data
-        Glide.with(getContext()).load(R.drawable.ic_add_white_24dp).into(img_category);
+        Glide.with(getContext()).load(R.drawable.ic_add_black_24dp).into(img_category);
 
 
         //Set Event
@@ -237,7 +237,7 @@ public class CategoryFragment extends Fragment {
     private void showDeleteDialog() {
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getContext());
         builder.setTitle(getString(R.string.delete));
-        builder.setMessage("Are you sure you want this?");
+        builder.setMessage("هل تريد مسح هذا العنصر؟");
         builder.setNegativeButton(getString(R.string.cancel), (dialog1, which) ->
                 dialog1.dismiss());
         builder.setPositiveButton(getString(R.string.delete), ((dialog1, which) -> deleteCategory()));
