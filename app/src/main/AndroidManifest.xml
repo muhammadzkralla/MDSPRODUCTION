@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:layoutDirection="ltr">
         <activity android:name="com.dimits.mahalladeliveryserver.ui.SizeAddonEditActivity"></activity>
         <activity
             android:name="com.dimits.mahalladeliveryserver.HomeActivity"
